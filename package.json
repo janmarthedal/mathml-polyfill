@@ -1,23 +1,27 @@
 {
-  "name": "math-element-lifecycle",
+  "name": "mathml-polyfill",
   "version": "0.0.1",
-  "description": "Get notified when math elements are created and attached/detached to/from the DOM",
-  "main": "math_element_lifecycle.js",
+  "description": "MathML element polyfill with typesetting by MathJax",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/janmarthedal/math-element-lifecycle.git"
+    "url": "git+https://github.com/janmarthedal/mathml-polyfill.git"
   },
   "keywords": [
     "mathml",
-    "dom"
+    "dom",
+    "polyfill"
   ],
   "author": "Jan Marthedal Rasmussen",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/janmarthedal/math-element-lifecycle/issues"
+    "url": "https://github.com/janmarthedal/mathml-polyfill/issues"
   },
-  "homepage": "https://github.com/janmarthedal/math-element-lifecycle#readme"
+  "homepage": "https://github.com/janmarthedal/mathml-polyfill#readme",
+  "dependencies": {
+    "webcomponents.js": "^0.7.20"
+  }
 }
