@@ -73,14 +73,15 @@ window.MathElementLifecycle = {};
     }
 
     function domReady() {
+        var body = document.querySelector('body');
         // Wrap DOM API
         createWrapper(document, 'createElementNS');
         createWrapper(Node.prototype, 'cloneNode');
         // Call created+attached on existing <math> nodes
-        searchTree(document.body, attach);
+        searchTree(body, attach);
         // Listen for node additions and removals in entire body
         observer = new MutationObserver(observeHandler);
-        observer.observe(document.body, observerConfig);
+        observer.observe(body, observerConfig);
     }
 
     scope.register = function (_hooks) {

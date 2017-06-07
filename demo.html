@@ -19,7 +19,8 @@
     <p>A paragraph</p>
     <p>And a paragraph with some inline <math display="inline">
   <mrow>
-    <mi>x</mi>
+    <!--<mi>x</mi>-->
+    <mspace width="40px" height="20px"></mspace>
     <mo>=</mo>
     <mfrac>
       <mrow>
@@ -116,25 +117,9 @@
     'use strict';
 
     var workarea = document.createElement('div'),
-        queue = [], working = false, chtml_styles;
-
-    function getStyles() {
-        var s, r, style, rule;
-        if (window.ShadowDOMPolyfill)
-            return null;
-        if (chtml_styles)
-            return chtml_styles;
-        for (s=0; s < document.styleSheets.length; s++) {
-            style = document.styleSheets[s];
-            for (r=0; r < style.cssRules.length; r++) {
-                rule = style.cssRules[r];
-                if (rule.type === 1 && rule.cssText.indexOf('.mjx-chtml') >= 0) {
-                    chtml_styles = style.ownerNode;
-                    return chtml_styles;
-                }
-            }
-        }
-    }
+        styleElement = document.createElement('style'),
+        linkCss = '@import url("./chtml.css")',
+        queue = [], working = false;
 
     function getMathJaxOutput(container) {
         var n = container.firstChild;
@@ -162,10 +147,9 @@
         script.text = item[0];
         workarea.appendChild(script);
         window.MathJax.Hub.Queue(['Typeset', window.MathJax.Hub, script, function () {
-            var mj = getMathJaxOutput(workarea), styles = getStyles();
+            var mj = getMathJaxOutput(workarea);
             empty(workarea);
-            if (styles)
-                item[1].appendChild(styles.cloneNode(true));
+            item[1].appendChild(styleElement.cloneNode(true));
             item[1].appendChild(mj.cloneNode(true));
             working = false;
             checkQueue();
@@ -181,6 +165,13 @@
     workarea.style.left = '4000px';
     workarea.style.top = '0';
     document.querySelector('body').appendChild(workarea);
+
+    styleElement.type = 'text/css';
+    if (styleElement.styleSheet){
+        styleElement.styleSheet.cssText = linkCss;
+    } else {
+        styleElement.appendChild(document.createTextNode(linkCss));
+    }
 
     window.MathElementLifecycle.register({
         attached: function (node) {
